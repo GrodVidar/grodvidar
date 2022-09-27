@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+{% block title %}Detail{% endblock %}
+
+{% block content %}
+     <div class="row">
+        <div class="col-lg-4 col-sm-2"></div>
+        <div class="col-lg-4 col-sm-8" id="detailCard">
+            <h2>{{ object.title }}</h2>
+            {% if object.image %}
+                {% load static %}
+                <div>
+                    <img class="counterImg" src="{% static object.image.url %}" alt="">
+                </div>
+                {{ object.days_left }}
+            {% endif %}
+        </div>
+        <div class="col-lg-4 col-sm-2"></div>
+     </div>
+{% endblock %}

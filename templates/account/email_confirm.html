@@ -1,4 +1,4 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 {% load i18n %}
 {% load account %}
 
@@ -7,8 +7,8 @@
 
 {% block content %}
     <div style="margin-top:6%" class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
+        <div class="col-lg-3 col-sm-2"></div>
+        <div class="col-lg-6 col-sm-8">
             <h2>{% trans "Confirm E-mail Address" %}</h2>
 
             {% if confirmation %}
@@ -30,6 +30,6 @@
 
             {% endif %}
         </div>
-        <div class="col-3"></div>
+        <div class="col-lg-3 col-sm-2"></div>
     </div>
 {% endblock %}
