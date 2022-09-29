@@ -22,6 +22,12 @@ class Counter(Model):
     def __str__(self):
         return f'{self.id}: {self.title}'
 
+    def delete(self, using=None, keep_parents=False):
+        self.image.delete(save=False)
+        super(Counter, self).delete()
+
+
+
     class Meta:
         constraints = [
             UniqueConstraint(fields=['user', 'title'], condition=Q(is_guest=False), name='unique_title_for_user')

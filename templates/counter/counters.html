@@ -3,4 +3,28 @@
 {% block title %}my counters{% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="col-lg-1 col-sm-0"></div>
+        <div class="col-lg-10 col-sm-12">
+            <table class="table table-dark table-hover" style="text-align: center">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                {% for counter in object_list %}
+                    <tr class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
+                        <td>
+                            {{ counter.title }}
+                        </td>
+                        <td>
+                            {{ counter.end_date }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-lg-1 col-sm-0"></div>
+    </div>
 {% endblock %}

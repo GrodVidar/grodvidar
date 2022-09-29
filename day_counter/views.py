@@ -30,7 +30,6 @@ class CounterView(generic.DetailView):
 
 class CountersView(generic.ListView):
     template_name = 'counter/counters.html'
-    pk_url_kwarg = 'guid'
 
     def get_queryset(self):
         return Counter.objects.filter(user=self.request.user)
