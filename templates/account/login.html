@@ -13,6 +13,7 @@
             <div class="w-50">
                 {% include "socialaccount/snippets/provider_list.html" with process="login" %}
             </div>
+            <hr>
             <form method="post" autocomplete="off">
                 {% csrf_token %}
                 <p>

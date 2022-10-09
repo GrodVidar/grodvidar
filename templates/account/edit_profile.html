@@ -25,9 +25,8 @@
                 <p>
                     <input class="form-control" value="{{ object.email }}" type="email" name="email" placeholder="{% trans 'Email' %}" autocomplete="email" required id="id_email">
                 </p>
-
-{#                {{ form|crispy }}#}
                 <button type="submit" class="btn btn-success">{% trans 'Update' %}</button>
+                <hr>
             </form>
 
             <h4>{% trans 'Change Password' %}</h4>
