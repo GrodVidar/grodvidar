@@ -11,6 +11,7 @@
                     <tr>
                         <th>Title</th>
                         <th>End Date</th>
+                        <th></th>
                     </tr>
                 </thead>
                 {% for counter in object_list %}
@@ -21,9 +22,20 @@
                         <td>
                             {{ counter.end_date }}
                         </td>
+                        <td>
+                            <form method="post" class="mb-0" action="{% url 'delete_view' counter.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
+            <div class="d-flex justify-content-center">
+                <a type="button" class="btn btn-success btn-lg" href="{% url 'create_view' %}">Create a counter</a>
+            </div>
         </div>
         <div class="col-lg-1 col-sm-0"></div>
     </div>

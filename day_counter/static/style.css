@@ -25,3 +25,7 @@ body{
 .clickableRow {
     cursor: pointer;
 }
+
+#toast-container {
+    margin-top: 7vh !important;
+}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+{% block title %}Create{% endblock %}
+{% load crispy_forms_tags %}
+{% crispy counter_form counter_form.helper %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-4 col-sm-2"></div>
+        <div class="col-lg-4 col-sm-8">
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+        <div class="col-lg-4 col-sm-2"></div>
+    </div>
+{% endblock %}

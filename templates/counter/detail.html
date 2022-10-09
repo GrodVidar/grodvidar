@@ -6,15 +6,58 @@
      <div class="row">
         <div class="col-lg-4 col-sm-2"></div>
         <div class="col-lg-4 col-sm-8" id="detailCard">
-            <h2>{{ object.title }}</h2>
             {% if object.image %}
                 {% load static %}
                 <div>
                     <img class="counterImg" src="{% static object.image.url %}" alt="">
                 </div>
-                {{ object.days_left }}
             {% endif %}
+            <h2 id="daysLeft"></h2>
+            <h3 id="timeLeft"></h3>
+            <h4>until</h4>
+            <h2>{{ object.title }}</h2>
+            <button class="btn btn-success" onclick="copyShareLink()">Copy share link</button>
         </div>
         <div class="col-lg-4 col-sm-2"></div>
      </div>
+    <script>
+        let endDate = { 'year':{{ object.end_date.year }},
+            'month': {{ object.end_date.month }},
+            'day': {{ object.end_date.day }}
+        };
+        let endTime = {
+            'hour': {{ object.end_time.hour }},
+            'minute': {{ object.end_time.minute }}
+        };
+        let daysElement = document.getElementById('daysLeft');
+        let timeElement = document.getElementById('timeLeft');
+        let endDateTime = new Date(endDate.year, endDate.month, endDate.day, endTime.hour, endTime.minute );
+        {% if not object.is_date_only %}
+                let countDowner = setInterval(function () {
+                let now = new Date().getTime();
+                let timeLeft = endDateTime - now;
+                let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                daysElement.innerHTML = `${days} days`;
+                timeElement.innerHTML = `${hours} hours ${minutes} minutes ${seconds} seconds`;
+
+            }, 1000)
+        {% else %}
+            let now = new Date().getTime();
+            let timeLeft = endDateTime - now;
+            let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            daysElement.innerHTML = `${days} days`
+        {% endif %}
+
+    function copyShareLink() {
+        Bs5Utils.defaults.toasts.position = 'top-center';
+        const bs5Utils = new Bs5Utils();
+        navigator.clipboard.writeText(window.location.href);
+        bs5Utils.Snack.show('success', 'Copied', 600, false);
+
+    }
+    </script>
 {% endblock %}
