@@ -1,19 +1,50 @@
 {% extends "base.html" %}
 {% load socialaccount %}
-{% block title %}Create{% endblock %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% crispy counter_form counter_form.helper %}
 
+{% block title %}{% trans 'Edit Profile' %}{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-lg-4 col-sm-2"></div>
         <div class="col-lg-4 col-sm-8">
+            <h2>{% trans 'Edit Profile' %}</h2>
             <form method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
-                {{ form|crispy }}
-                <button type="submit" class="btn btn-primary">Update</button>
+                <p>
+                    <input class="form-control" value="{{ object.username }}" type="text" name="username" placeholder="{% trans 'Username' %}" autocomplete="username" required id="id_username">
+                </p>
+                <p>
+                    <input class="form-control" value="{{ object.first_name }}" type="text" name="first_name" placeholder="{% trans 'First Name' %}" autocomplete="first-name" required id="id_first_name">
+                </p>
+                <p>
+                    <input class="form-control" value="{{ object.last_name }}" type="text" name="last_name" placeholder="{% trans 'Last Name' %}" autocomplete="last-name" required id="id_last_name">
+                </p>
+                <p>
+                    <input class="form-control" value="{{ object.email }}" type="email" name="email" placeholder="{% trans 'Email' %}" autocomplete="email" required id="id_email">
+                </p>
+
+{#                {{ form|crispy }}#}
+                <button type="submit" class="btn btn-success">{% trans 'Update' %}</button>
             </form>
+
+            <h4>{% trans 'Change Password' %}</h4>
+            <form method="post" class="password_change" id="signup_form" action="{% url 'account_change_password' %}">
+                {% csrf_token %}
+                <p>
+                    <input class="form-control" type="password" name="oldpassword" placeholder="Current Password" autocomplete="current-password" minlength="8" required id="id_oldpassword">
+                </p>
+                <p>
+                    <input class="form-control" type="password" name="password1" placeholder="New Password" autocomplete="new-password" required id="id_password1">
+                </p>
+                <p>
+                    <input class="form-control" type="password" name="password2" placeholder="New Password (again)" required id="id_password2">
+                </p>
+                <button class="btn btn-success" type="submit">Change Password</button>
+            </form>
+                <a href="/accounts/password/reset/" class="btn btn-dark btn-sm">Forgot Password?</a>
         </div>
         <div class="col-lg-4 col-sm-2"></div>
     </div>

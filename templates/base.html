@@ -70,13 +70,7 @@
                                     <li><a class="dropdown-item" href="{% url "account_login" %}">Login</a></li>
                                     <li><a class="dropdown-item" href="{% url "account_signup" %}">Register</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <form action="{% provider_login_url 'google' %}" method="post">
-                                        {% csrf_token %}
-                                        <button class="btn btn-light w-100" type="submit">
-                                            <img height="16px" src={% static 'img/Google__G__Logo.svg' %}>
-                                            <span style="white-space: nowrap;">Login with Google</span>
-                                        </button>
-                                    </form>
+                                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
                                 </ul>
                                 {% comment %}<a class="nav-link active" aria-current="page" href="accounts/signup/">Login</a>
                                 <a class="nav-link active" aria-current="page" href={% provider_login_url 'google' %}>Login with google</a>{% endcomment %}

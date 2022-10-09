@@ -1,0 +1,26 @@
+{% load socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+
+<div class="providers mb-3">
+    {% for provider in socialaccount_providers %}
+        {% if provider.id == "openid" %}
+            {% for brand in provider.get_brands %}
+        <form method="post" action="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light w-100">{{ brand.name }}</button>
+        </form>
+            {% endfor %}
+        {% endif %}
+        <form method="post" action="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+            {% csrf_token %}
+            <button class="btn btn-light w-100" title="{{provider.name}}" class="socialaccount_provider {{provider.id}}">
+                {% load static %}
+                {% with 'img/'|add:provider.name|add:'.svg' as image_path %}
+                    <img height="16px" src="{% static image_path %}" alt="">
+                {% endwith %}
+                Login with {{provider.name}}
+            </button>
+        </form>
+    {% endfor %}
+</div>

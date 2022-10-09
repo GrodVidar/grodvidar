@@ -3,23 +3,33 @@
 {% load crispy_forms_tags %}
 {% load socialaccount %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans 'Login' %}{% endblock %}
 
 {% block content %}
     <div style="margin-top:6%" class="row">
         <div class="col-lg-4 col-sm-2"></div>
         <div class="col-lg-4 col-sm-8">
             <h2>Log In</h2>
+            <div class="w-50">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </div>
             <form method="post" autocomplete="off">
                 {% csrf_token %}
                 <p>
-                    <input class="form-control " type="text" name="login" placeholder="Username" autocomplete="username" maxlength="150" required id="id_login">
+                    <input class="form-control " type="text" name="login" placeholder="{% trans 'Username' %}" autocomplete="username" maxlength="150" required id="id_login">
                 </p>
                 <p>
-                    <input class="form-control" type="password" name="password" placeholder="Password" autocomplete="current-password" required id="id_password">
+                    <input class="form-control" type="password" name="password" placeholder="{% trans 'Password' %}" autocomplete="current-password" required id="id_password">
                 </p>
-                <button class="btn btn-dark" type="submit">Login</button>
+                <button class="btn btn-dark" type="submit">{% trans 'Login' %}</button>
             </form>
+                    <div>
+                        <a href="/accounts/password/reset/" class="btn btn-dark btn-sm">Forgot Password?</a>
+                    </div>
+                    <div>
+                        <a class="btn btn-dark btn-sm mt-3" href="{{ signup_url }}">{% trans 'Sign Up' %}</a>
+                    </div>
+                </div>
         </div>
         <div class="col-lg-4 col-sm-2"></div>
     </div>
