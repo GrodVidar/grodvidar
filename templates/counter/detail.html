@@ -36,7 +36,7 @@
         };
         let daysElement = document.getElementById('daysLeft');
         let timeElement = document.getElementById('timeLeft');
-        let endDateTime = new Date(endDate.year, endDate.month, endDate.day, endTime.hour, endTime.minute );
+        let endDateTime = new Date(endDate.year, endDate.month-1, endDate.day, endTime.hour, endTime.minute );
         {% if not object.is_date_only %}
                 let countDowner = setInterval(function () {
                 let now = new Date().getTime();
