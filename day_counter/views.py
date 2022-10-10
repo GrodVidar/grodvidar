@@ -54,7 +54,6 @@ class CounterCreateView(CreateView):
     template_name = 'create.html'
 
     def get_success_url(self):
-        messages.add_message(self.request, messages.SUCCESS, 'Share link copied to clipboard')
         return reverse('counter_view', kwargs={'guid': self.object.guid})
 
     def form_valid(self, form):

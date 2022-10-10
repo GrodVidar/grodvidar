@@ -4,6 +4,7 @@
 ### Custom ###
 images/
 .idea/
+grodvidar/settings.py
 
 ### Django ###
 *.log
