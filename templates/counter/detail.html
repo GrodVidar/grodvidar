@@ -1,6 +1,23 @@
 {% extends "base.html" %}
 {% load socialaccount %}
 {% load i18n %}
+
+{% block meta %}
+    <meta property="og:title" content="{{ object.title }}">
+    <meta name="twitter:title" content="{{ object.title }}">
+    <meta property="og:description" content="Count days until events">
+    <meta name="twitter:description" content="Count days until events">
+    {% if object.image %}
+        <meta property="og:image" content="{{ object.image.url }}">
+        <meta name="twitter:image" content="{{ object.image.url }}">
+    {% else %}
+        {% load static %}
+        <meta property="og:image" content="{% static 'img/grod.png' %}">
+        <meta name="twitter:image" content="{% static 'img/grod.png' %}">
+    {% endif %}
+    <meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+
 {% block title %}Detail{% endblock %}
 
 {% block content %}
@@ -12,13 +29,18 @@
                 {% if object.image %}
                     {% load static %}
                     <div>
-                        <img class="counterImg" src="{% static object.image.url %}" alt="">
+                        <img class="counterImg" src="{{ object.image.url }}" alt="">
                     </div>
                 {% endif %}
                 <h2 id="daysLeft"></h2>
                 <h3 id="timeLeft"></h3>
-                <h4>until</h4>
+                <h4 id="until" class="hidden" >until</h4>
                 <h2>{{ object.title }}</h2>
+                {% if object.is_date_only %}
+                    <h4 class="hidden" id="endTime">Ended {{ object.end_date }}</h4>
+                {% else %}
+                    <h4 class="hidden" id="endTime">Ended {{ object.end_date }} {{ object.end_time }}</h4>
+                {% endif %}
                 <hr>
             </div>
             <button class="btn btn-success" onclick="copyShareLink()">{% trans 'Copy share link' %}</button>
@@ -38,23 +60,39 @@
         let timeElement = document.getElementById('timeLeft');
         let endDateTime = new Date(endDate.year, endDate.month-1, endDate.day, endTime.hour, endTime.minute );
         {% if not object.is_date_only %}
-                let countDowner = setInterval(function () {
+            let countDowner = setInterval(function () {
                 let now = new Date().getTime();
                 let timeLeft = endDateTime - now;
-                let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                if (timeLeft < 0) {
+                    document.getElementById('until').style.display = 'none';
+                    document.getElementById('endTime').style.display = 'block'
+                }
+                else {
+                    let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                    document.getElementById('until').style.display = 'block';
+                    document.getElementById('endTime').style.display = 'none'
+                    daysElement.innerHTML = `${days} days`;
+                    timeElement.innerHTML = `${hours} hours ${minutes} minutes ${seconds} seconds`;
+                }
 
-                daysElement.innerHTML = `${days} days`;
-                timeElement.innerHTML = `${hours} hours ${minutes} minutes ${seconds} seconds`;
 
             }, 1000)
         {% else %}
             let now = new Date().getTime();
             let timeLeft = endDateTime - now;
-            let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            daysElement.innerHTML = `${days} days`
+            if (timeLeft < 0) {
+                    document.getElementById('until').style.display = 'none';
+                    document.getElementById('endTime').style.display = 'block'
+                }
+            else {
+                let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                document.getElementById('until').style.display = 'block';
+                document.getElementById('endTime').style.display = 'none'
+                daysElement.innerHTML = `${days} days`
+            }
         {% endif %}
 
         function copyShareLink() {

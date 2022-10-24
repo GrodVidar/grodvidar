@@ -12,6 +12,15 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
         <script src="{% static 'Bs5Utils.js' %}"></script>
         <link rel="stylesheet" href={% static 'style.css' %}>
+        {% block meta %}
+            <meta property="og:title" content="Day Counter">
+            <meta property="og.description" content="Count days until events">
+            <meta property="og.image" content="{% static 'img/grod.png' %}">
+            <meta name="twitter:title" content="Day Counter">
+            <meta name="twitter:description" content="Count days until events">
+            <meta name="twitter:image" content="{% static 'img/grod.png' %}">
+            <meta name="twitter:card" content="summary_large_image">
+        {% endblock %}
         <title>{% block title %}Day Counter!{% endblock %}</title>
     </head>
     <body>
