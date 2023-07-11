@@ -132,7 +132,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'day_counter/static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'day_counter/static/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'day_counter/media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -158,7 +158,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SITE_ID = 2
 
-DATE_INPUT_FORMATS = ['%d/%m/&Y']
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -167,7 +166,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 SENDGRID_API_KEY = env('SENDGRID_API_KEY')
 SENDGRID_SANDBOX_MODE_IN_DEBUG = True
-SENDGRID_ECHO_TO_STDOUT = False
+SENDGRID_ECHO_TO_STDOUT = True
 
 DEFAULT_FROM_EMAIL = 'noreply@msg.grodvidar.com'
 FROM_EMAIL = 'noreply@msg.grodvidar.com'

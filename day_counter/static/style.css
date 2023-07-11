@@ -29,3 +29,7 @@ body{
 #toast-container {
     margin-top: 7vh !important;
 }
+
+#updateAndDelete form {
+    display: inline;
+}

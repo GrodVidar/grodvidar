@@ -51,7 +51,7 @@ class CountersView(LoginRequiredMixin, generic.ListView):
 class CounterCreateView(CreateView):
     model = Counter
     form_class = CounterForm
-    template_name = 'create.html'
+    template_name = 'counter/create.html'
 
     def get_success_url(self):
         return reverse('counter_view', kwargs={'guid': self.object.guid})
@@ -64,6 +64,18 @@ class CounterCreateView(CreateView):
         else:
             counter.is_guest = True
         return super(CounterCreateView, self).form_valid(form)
+
+
+class CounterUpdateView(UpdateView, UserPassesTestMixin):
+    model = Counter
+    form_class = CounterForm
+    template_name = 'counter/update.html'
+
+    def get_success_url(self):
+        return reverse('counter_view', kwargs={'guid': self.object.guid})
+
+    def test_func(self):
+        return self.get_object().user.pk == self.request.user.pk
 
 
 class CounterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):

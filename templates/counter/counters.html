@@ -22,13 +22,16 @@
                         <td>
                             {{ counter.end_date }}
                         </td>
-                        <td>
+                        <td id="updateAndDelete">
                             <form method="post" class="mb-0" action="{% url 'delete_view' counter.pk %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-secondary">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
+                            <a href="{% url 'update_view' counter.pk %}" class="btn btn-secondary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

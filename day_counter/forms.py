@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 
 class DateInput(forms.DateInput):
     input_type = 'date'
-    input_formats = ['%d/%m/%Y']
 
 
 class TimeInput(forms.TimeInput):
@@ -18,8 +17,8 @@ class CounterForm(forms.ModelForm):
         model = Counter
         fields = ('title', 'image', 'end_date', 'end_time')
         widgets = {
-            'end_date': DateInput(format='%d/%m/%Y'),
-            'end_time': TimeInput()
+            'end_date': DateInput(),
+            'end_time': TimeInput(),
         }
 
     def __init__(self, *args, **kwargs):
