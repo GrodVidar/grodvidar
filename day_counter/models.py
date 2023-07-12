@@ -8,7 +8,6 @@ from crispy_forms.helper import FormHelper
 
 
 class Counter(Model):
-    id = IntegerField('id', primary_key=True)
     title = CharField('Title', max_length=255, null=False, blank=False)
     image = ImageField(upload_to='images', null=True, blank=True)
     create_date = DateTimeField(auto_now_add=True)

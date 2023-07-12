@@ -22,8 +22,7 @@ DATABASES = {
         'PASSWORD': env('MY_SQL_PASS'),
         'HOST': 'GrodVidar.mysql.pythonanywhere-services.com',
         'TEST': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'test.db'
+            'NAME': 'GrodVidar$testdb',
         },
     },
 }
