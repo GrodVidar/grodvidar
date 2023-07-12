@@ -21,7 +21,11 @@ DATABASES = {
         'USER': 'GrodVidar',
         'PASSWORD': env('MY_SQL_PASS'),
         'HOST': 'GrodVidar.mysql.pythonanywhere-services.com',
-    }
+        'TEST': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'test.db'
+        },
+    },
 }
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'day_counter/media')
