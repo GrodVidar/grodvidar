@@ -1,11 +1,12 @@
 import os
 import environ
 from pathlib import Path
+from .base import BASE_DIR
+
 
 env = environ.Env()
 environ.Env.read_env()
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
