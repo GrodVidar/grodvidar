@@ -15,23 +15,20 @@
                     </tr>
                 </thead>
                 {% for counter in object_list %}
-                    <tr class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
-                        <td>
+                    <tr>
+                        <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
                             {{ counter.title }}
                         </td>
-                        <td>
+                        <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
                             {{ counter.end_date }}
                         </td>
                         <td id="updateAndDelete">
-                            <form method="post" class="mb-0" action="{% url 'delete_view' counter.pk %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-secondary">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
                             <a href="{% url 'update_view' counter.pk %}" class="btn btn-secondary">
                                 <i class="bi bi-pencil"></i>
                             </a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-pk="{% url 'delete_view' counter.pk %}">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 {% endfor %}

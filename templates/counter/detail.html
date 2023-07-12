@@ -43,7 +43,19 @@
                 {% endif %}
                 <hr>
             </div>
-            <button class="btn btn-success" onclick="copyShareLink()">{% trans 'Copy share link' %}</button>
+            <div>
+                <button class="btn btn-success btn-lg" onclick="copyShareLink()">{% trans 'Copy share link' %}</button>
+                {% if object.user and request.user == object.user %}
+                    <span id="updateAndDelete" style="float: right;">
+                        <a href="{% url 'update_view' counter.pk %}" class="btn btn-dark">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-pk="{% url 'delete_view' object.pk %}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </span>
+                {% endif %}
+            </div>
         </div>
         <div class="col-lg-4 col-sm-2"></div>
      </div>
