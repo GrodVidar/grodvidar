@@ -30,6 +30,12 @@ class CounterView(generic.DetailView):
     def get_object(self, queryset=None):
         return Counter.objects.get(guid=self.kwargs['guid'])
 
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object(self)
+        context = super(CounterView, self).get_context_data(**kwargs)
+        messages.add_message(request, messages.SUCCESS, 'Counter followed')
+        return self.render_to_response(context=context)
+
 
 class CountersView(LoginRequiredMixin, generic.ListView):
     template_name = 'counter/counters.html'
@@ -57,7 +63,7 @@ class CounterCreateView(CreateView):
         return super(CounterCreateView, self).form_valid(form)
 
 
-class CounterUpdateView(UpdateView, UserPassesTestMixin):
+class CounterUpdateView(UserPassesTestMixin, UpdateView):
     model = Counter
     form_class = CounterForm
     template_name = 'counter/update.html'
