@@ -7,4 +7,6 @@ $('#deleteModal').on('show.bs.modal', function (event) {
     modal.find('#deleteForm').attr('action', pk );
 });
 
+
+
 //action("{% url 'delete_view' " + pk + " %}")

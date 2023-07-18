@@ -1,20 +1,11 @@
-from django.contrib.auth.models import AnonymousUser
-from django.template.response import TemplateResponse
-from django.utils.functional import SimpleLazyObject
-from django.http import HttpResponse
 from django.contrib.auth import logout as django_logout
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from allauth.account.views import SignupView, LoginView
-from django.contrib.auth import login as django_login
-from django.contrib.auth import authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView, DeleteView, UpdateView
 
-from .forms import CounterForm, UserForm
-from django.contrib import messages
+from .forms import CounterForm
 from .models import Counter
 
 
@@ -86,14 +77,4 @@ class CounterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.get_object().user.pk == self.request.user.pk
 
 
-class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = User
-    form_class = UserForm
-    template_name = 'account/edit_profile.html'
 
-    def test_func(self):
-        return self.get_object().pk == self.request.user.pk
-
-    def get_success_url(self):
-        messages.add_message(self.request, messages.SUCCESS, 'Profile updated')
-        return reverse_lazy('counters_view')

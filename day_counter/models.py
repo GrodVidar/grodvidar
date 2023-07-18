@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
+from users.models import User
 from django.db.models import Model, DateTimeField, DateField, TimeField, BooleanField, CharField, ImageField, UUIDField
 from django.db.models import ForeignKey, IntegerField, CASCADE, UniqueConstraint, Q, ManyToManyField
 from datetime import datetime, timedelta, date, time

@@ -6,7 +6,7 @@ from factory.django import DjangoModelFactory
 from factory import LazyAttribute, SubFactory
 from faker import Faker
 from ..models import Counter
-from django.contrib.auth.models import User
+from users.models import User
 
 
 faker = Faker()

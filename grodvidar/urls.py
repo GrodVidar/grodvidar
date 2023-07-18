@@ -22,6 +22,7 @@ from grodvidar import settings
 urlpatterns = [
     path('', include('day_counter.urls')),
     path('admin/', admin.site.urls),
+    path('users/', include('users.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

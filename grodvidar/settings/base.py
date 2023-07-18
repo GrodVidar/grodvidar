@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users.apps.UsersConfig',
     'day_counter.apps.DayCounterConfig',
     'crispy_forms',
     'crispy_bootstrap5',
@@ -155,3 +156,5 @@ FROM_EMAIL = 'noreply@msg.grodvidar.com'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
+AUTH_USER_MODEL = 'users.User'

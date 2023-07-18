@@ -25,6 +25,13 @@
                 <p>
                     <input class="form-control" value="{{ object.email }}" type="email" name="email" placeholder="{% trans 'Email' %}" autocomplete="email" required id="id_email">
                 </p>
+                <p>
+                    <input class="form-check-input" {% if object.enable_reminders %} checked="true" {% endif %} type="checkbox" name="enable_reminders" id="id_enable_reminders">
+                    <label class="form-check-label" for="id_enable_reminders">Enable reminders</label>
+                </p>
+                <p id="p_reminder_days">
+                    <input class="form-control" value="{{ object.reminder_days }}" type="number" name="reminder_days" id="id_reminder_days">
+                </p>
                 <button type="submit" class="btn btn-success">{% trans 'Update' %}</button>
                 <hr>
             </form>
@@ -47,4 +54,19 @@
         </div>
         <div class="col-lg-4 col-sm-2"></div>
     </div>
+    <script>
+        $(document).ready(function() {
+            if(!$('#id_enable_reminders').attr('checked')) {
+                $('#p_reminder_days').hide();
+            }
+            $('#id_enable_reminders').change(function() {
+                if(this.checked) {
+                    $('#p_reminder_days').show();
+                }
+                else {
+                    $('#p_reminder_days').hide();
+                }
+            });
+        })
+    </script>
 {% endblock %}
