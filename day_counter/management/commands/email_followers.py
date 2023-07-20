@@ -16,7 +16,6 @@ class Command(BaseCommand):
             date = (datetime.today() + timedelta(user.reminder_days)).date()
             followed_counters = Counter.objects.filter(followers=user, end_date=date)
             owned_counters = Counter.objects.filter(user=user, end_date=date)
-            print(DOMAIN)
             html_message = loader.render_to_string(
                 'counter/messages/counter_reminder.html',
                 {
@@ -28,7 +27,6 @@ class Command(BaseCommand):
                 }
             )
             messages += (('Counter reminders', html_message, None, [user.email]),)
-        print(messages)
         send_mass_mail(messages)
 
 

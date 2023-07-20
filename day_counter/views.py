@@ -61,7 +61,6 @@ class CountersView(LoginRequiredMixin, generic.ListView):
         return Counter.objects.filter(user=self.request.user)
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         if 'unfollow' in request.POST:
             Counter.objects.get(pk=request.POST['unfollow']).followers.remove(self.request.user)
             messages.add_message(request, messages.SUCCESS, 'Counter unfollowed')
