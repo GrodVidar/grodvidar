@@ -23,3 +23,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'day_counter/media')
 
 SENDGRID_SANDBOX_MODE_IN_DEBUG = True
 
+DOMAIN = '127.0.0.1:8000'
+

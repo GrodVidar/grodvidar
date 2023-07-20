@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+  <p>Dear {{ user_name }},</p>
+  <p>Your followed or owned counters are {{ days_left }} days from being completed. Below is the list of your counters:</p>
+  {% if owned_counters %}
+    <h3>Owned counters</h3>
+    <ul>
+      {% for counter in owned_counters %}
+      <li>
+        <a href="{{ domain }}{% url 'counter_view' counter.guid %}">
+          <strong>{{ counter.title }}</strong>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if followed_counters %}
+    <h3>Followed counters</h3>
+    <ul>
+      {% for counter in followed_counters %}
+        <li>
+        <a href="{{ domain }}{% url 'counter_view' counter.guid %}">
+          <strong>{{ counter.title }}</strong>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <p>Thank you for using our platform!</p>
+
+  <p>Best regards,<br>
+  GrodVidar</p>
+</body>
+</html>

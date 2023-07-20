@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth import logout as django_logout
-from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView, DeleteView, UpdateView
@@ -30,10 +31,20 @@ class CounterView(generic.DetailView):
     def get_object(self, queryset=None):
         return Counter.objects.get(guid=self.kwargs['guid'])
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object(self)
+    def get_context_data(self, **kwargs):
         context = super(CounterView, self).get_context_data(**kwargs)
-        messages.add_message(request, messages.SUCCESS, 'Counter followed')
+        context['is_following'] = self.object.followers.filter(pk=self.request.user.pk).exists()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if 'follow' in request.POST:
+            self.object.followers.add(request.user)
+            messages.add_message(request, messages.SUCCESS, 'Counter followed')
+        elif 'unfollow' in request.POST:
+            self.object.followers.remove(request.user)
+            messages.add_message(request, messages.SUCCESS, 'Counter unfollowed')
+        context = self.get_context_data(**kwargs)
         return self.render_to_response(context=context)
 
 
@@ -41,8 +52,22 @@ class CountersView(LoginRequiredMixin, generic.ListView):
     template_name = 'counter/counters.html'
     permission_denied_message = 'not logged in'
 
+    def get_context_data(self, object_list=None, *args, **kwargs):
+        context = super(CountersView, self).get_context_data(**kwargs)
+        context['followed_counters'] = Counter.objects.filter(followers=self.request.user)
+        return context
+
     def get_queryset(self):
         return Counter.objects.filter(user=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        if 'unfollow' in request.POST:
+            Counter.objects.get(pk=request.POST['unfollow']).followers.remove(self.request.user)
+            messages.add_message(request, messages.SUCCESS, 'Counter unfollowed')
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context=context)
 
 
 class CounterCreateView(CreateView):

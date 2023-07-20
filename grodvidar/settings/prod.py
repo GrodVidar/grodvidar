@@ -31,3 +31,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'day_counter/media')
 
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
+DOMAIN = 'https://counter.grodvidar.com'
+

@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary_large_image">
 {% endblock %}
 
-{% block title %}Detail{% endblock %}
+{% block title %}{{ object.title }}{% endblock %}
 
 {% block content %}
      <div class="row">
@@ -45,7 +45,7 @@
             </div>
             <div>
                 <button class="btn btn-success btn-lg" onclick="copyShareLink()">{% trans 'Copy share link' %}</button>
-                {% if object.user and request.user == object.user %}
+                {% if user.is_authenticated and request.user == object.user %}
                     <span id="updateAndDelete" style="float: right;">
                         <a href="{% url 'update_view' counter.pk %}" class="btn btn-dark">
                             <i class="bi bi-pencil"></i>
@@ -54,15 +54,23 @@
                             <i class="bi bi-trash"></i>
                         </button>
                     </span>
-                {% else %}
-                    <a href="{% url 'update_view' counter.pk %}" class="btn btn-dark">
-                        <i class="bi bi-pencil"></i>
-                    </a>
-
-                    <!--<form method="post" style="display: inline; float: right;">
+                {% elif user.is_authenticated and not is_following %}
+                    <form method="post" style="display: inline; float: right;">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-secondary">Follow</button>
-                    </form>-->
+                        <button type="submit" name="follow" class="btn btn-secondary">Follow</button>
+                    </form>
+                {% elif user.is_authenticated and is_following%}
+                    <form method="post" style="display: inline; float: right;">
+                        {% csrf_token %}
+                        <button type="submit" name="unfollow" class="btn btn-secondary">Unfollow</button>
+                    </form>
+                {% else %}
+                    <form method="post" style="display: inline; float: right;">
+                        {% csrf_token %}
+                        <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Log in to follow">
+                            <button type="submit" class="btn btn-secondary" disabled>Follow</button>
+                        </span>
+                    </form>
                 {% endif %}
             </div>
         </div>

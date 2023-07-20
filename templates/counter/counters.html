@@ -6,15 +6,48 @@
     <div class="row">
         <div class="col-lg-1 col-sm-0"></div>
         <div class="col-lg-10 col-sm-12">
-            <table class="table table-dark table-hover" style="text-align: center">
+            {% if object_list %}
+                <table class="table table-dark table-hover" style="text-align: center">
+                    <thead>
+                        <tr>
+                            <th class="col-4">Title</th>
+                            <th class="col-4">End Date</th>
+                            <th class="col-4"></th>
+                        </tr>
+                    </thead>
+                    {% for counter in object_list %}
+                        <tr>
+                            <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
+                                {{ counter.title }}
+                            </td>
+                            <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
+                                {{ counter.end_date }}
+                            </td>
+                            <td>
+                                <a href="{% url 'update_view' counter.pk %}" class="btn btn-secondary">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-pk="{% url 'delete_view' counter.pk %}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+            <div class="d-flex justify-content-center">
+                <a type="button" class="btn btn-success btn-lg" href="{% url 'create_view' %}">Create a counter</a>
+            </div>
+            {% if followed_counters %}
+            <h3>Followed counters</h3>
+            <table class="table table-dark table-hover mt-2"  style="text-align: center">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>End Date</th>
-                        <th></th>
+                        <th class="col-4">Title</th>
+                        <th class="col-4">End Date</th>
+                        <th class="col-4"></th>
                     </tr>
-                </thead>
-                {% for counter in object_list %}
+                {% for counter in followed_counters %}
                     <tr>
                         <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
                             {{ counter.title }}
@@ -22,20 +55,17 @@
                         <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
                             {{ counter.end_date }}
                         </td>
-                        <td id="updateAndDelete">
-                            <a href="{% url 'update_view' counter.pk %}" class="btn btn-secondary">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-pk="{% url 'delete_view' counter.pk %}">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                        <td>
+                            <form method="post" style="display=inline; margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" name="unfollow" value="{{ counter.pk }}" class="btn btn-secondary btn-sm">unfollow</button>
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}
+                </thead>
             </table>
-            <div class="d-flex justify-content-center">
-                <a type="button" class="btn btn-success btn-lg" href="{% url 'create_view' %}">Create a counter</a>
-            </div>
+            {% endif %}
         </div>
         <div class="col-lg-1 col-sm-0"></div>
     </div>
