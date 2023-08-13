@@ -33,3 +33,5 @@ SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 DOMAIN = 'https://counter.grodvidar.com'
 
+EMAIL_USE_TLS = True
+
