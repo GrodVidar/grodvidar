@@ -1,7 +1,6 @@
 from crispy_forms.helper import FormHelper
 from .models import Counter
 from django import forms
-from users.models import User
 
 
 class DateInput(forms.DateInput):

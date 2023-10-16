@@ -1,11 +1,7 @@
 from django.urls import path, include
-from django.views.generic import TemplateView
-from django.contrib.auth.views import LogoutView
-from day_counter.views import logout, index
-from day_counter.views import CounterView, CountersView, CounterCreateView, CounterDeleteView
-from day_counter.views import CounterUpdateView
-from django.conf import settings
-from django.conf.urls.static import static
+from apps.day_counter.views import logout, index
+from apps.day_counter.views import CounterView, CountersView, CounterCreateView, CounterDeleteView
+from apps.day_counter.views import CounterUpdateView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 

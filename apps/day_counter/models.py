@@ -1,10 +1,8 @@
-from django import forms
-from users.models import User
+from apps.users.models import User
 from django.db.models import Model, DateTimeField, DateField, TimeField, BooleanField, CharField, ImageField, UUIDField
-from django.db.models import ForeignKey, IntegerField, CASCADE, UniqueConstraint, Q, ManyToManyField
-from datetime import datetime, timedelta, date, time
+from django.db.models import ForeignKey, CASCADE, UniqueConstraint, Q, ManyToManyField
+from datetime import time
 import uuid
-from crispy_forms.helper import FormHelper
 
 
 class Counter(Model):

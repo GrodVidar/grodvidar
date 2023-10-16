@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from day_counter.models import Counter
+from apps.day_counter.models import Counter
 
 
 @admin.register(Counter)

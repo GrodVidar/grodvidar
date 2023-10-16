@@ -1,6 +1,6 @@
-from django.core.management.base import BaseCommand, CommandError
-from day_counter.models import Counter
-from users.models import User
+from django.core.management.base import BaseCommand
+from apps.day_counter.models import Counter
+from apps.users.models import User
 from datetime import timedelta, datetime
 from django.template import loader
 from grodvidar.settings import DOMAIN

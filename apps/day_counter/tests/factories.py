@@ -1,12 +1,10 @@
-from random import randint
 import uuid
 
-from django.db.models import BigIntegerField
 from factory.django import DjangoModelFactory
 from factory import LazyAttribute, SubFactory
 from faker import Faker
 from ..models import Counter
-from users.models import User
+from apps.users.models import User
 
 
 faker = Faker()
