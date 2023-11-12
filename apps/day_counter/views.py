@@ -12,7 +12,7 @@ from .models import Counter
 
 def index(request):
     if request.user.is_authenticated:
-        return redirect('counters_view')
+        return redirect('counters:counters_view')
 
     return render(request, 'index.html')
     # else:
@@ -75,7 +75,7 @@ class CounterCreateView(CreateView):
     template_name = 'counter/create.html'
 
     def get_success_url(self):
-        return reverse('counter_view', kwargs={'guid': self.object.guid})
+        return reverse('counters:counter_view', kwargs={'guid': self.object.guid})
 
     def form_valid(self, form):
         counter = form.save(commit=False)
@@ -93,7 +93,7 @@ class CounterUpdateView(UserPassesTestMixin, UpdateView):
     template_name = 'counter/update.html'
 
     def get_success_url(self):
-        return reverse('counter_view', kwargs={'guid': self.object.guid})
+        return reverse('counters:counter_view', kwargs={'guid': self.object.guid})
 
     def test_func(self):
         return self.get_object().user.pk == self.request.user.pk
@@ -101,7 +101,7 @@ class CounterUpdateView(UserPassesTestMixin, UpdateView):
 
 class CounterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Counter
-    success_url = reverse_lazy('counters_view')
+    success_url = reverse_lazy('counters:counters_view')
 
     def test_func(self):
         return self.get_object().user.pk == self.request.user.pk

@@ -17,4 +17,4 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Profile updated')
-        return reverse_lazy('counters_view')
+        return reverse_lazy('counters:counters_view')

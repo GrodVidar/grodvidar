@@ -22,7 +22,7 @@
     <ul>
       {% for counter in followed_counters %}
         <li>
-        <a href="{{ domain }}{% url 'counter_view' counter.guid %}">
+        <a href="{{ domain }}{% url 'counters:counter_view' counter.guid %}">
           <strong>{{ counter.title }}</strong>
         </a>
       </li>
