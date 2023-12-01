@@ -14,7 +14,7 @@ def index(request):
     if request.user.is_authenticated:
         return redirect('counters:counters_view')
 
-    return render(request, 'index.html')
+    return render(request, 'counter/index.html')
     # else:
     #     return TemplateResponse(request, 'index.html')
 

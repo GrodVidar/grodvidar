@@ -7,7 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 app_name = 'counters'
 
 urlpatterns = [
-    path('', index),
+    path('', index, name='index'),
     path('logout/', logout),
     path('create/', CounterCreateView.as_view(), name='create_view'),
     path('counter/<str:guid>', CounterView.as_view(), name='counter_view'),

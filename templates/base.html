@@ -21,7 +21,7 @@
             <meta name="twitter:image" content="{% static 'img/grod.png' %}">
             <meta name="twitter:card" content="summary_large_image">
         {% endblock %}
-        <title>{% block title %}Day Counter!{% endblock %}</title>
+        <title>{% block title %}GrodVidar{% endblock %}</title>
     </head>
     <body>
         <div class="w-100">
@@ -51,8 +51,15 @@
                 <div class="container">
                     <a class="navbar-brand text-white" href="/">
                         <img src="{% static 'img/grod.png' %}" width="30" height="30" class="d-inline-block align-top">
-                        GrodVidar
                     </a>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'counters:index' %}">Counters</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'movies:index' %}">Movies</a>
+                        </li>
+                    </ul>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
