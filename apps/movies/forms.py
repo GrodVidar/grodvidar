@@ -19,7 +19,9 @@ class MoviesForm(forms.Form):
         (SF_ANYTIME, 'SF Anytime'),
     )
 
-    provider = forms.ChoiceField(
+    title = forms.CharField(label='Movie title', max_length=100, min_length=3)
+
+    providers = forms.MultipleChoiceField(
         label='Providers',
         choices=PROVIDER_CHOICES,
         widget=forms.CheckboxSelectMultiple,
