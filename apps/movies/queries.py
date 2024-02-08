@@ -1,15 +1,15 @@
 import requests
 
 
-def get_title_offers(node_id):
+def get_title_offers(node_id, country):
     url = "https://apis.justwatch.com/graphql"
     query = {
         "operationName": "GetTitleOffers",
         "variables": {
             "platform": "WEB",
             "nodeId": node_id,
-            "country": "SE",
-            "language": "sv",
+            "country": country,
+            "language": "en",
             "filterBuy": {"monetizationTypes": ["BUY"], "bestOnly": True},
             "filterFlatrate": {
                 "monetizationTypes": ["FLATRATE"],
@@ -68,12 +68,12 @@ def get_title_offers(node_id):
     return response.json()
 
 
-def get_search_titles(title):
+def get_search_titles(title, country):
     url = "https://apis.justwatch.com/graphql"
     query = {
         "operationName": "GetSearchTitles",
         "variables": {
-            "country": "SV",
+            "country": country,
             "first": 5,
             "language": "en",
             "sortRandomSeed": 0,
@@ -110,25 +110,28 @@ def get_search_titles(title):
     return response.json()
 
 
-def query_title(title, providers):
-    results = get_search_titles(title)['data']['popularTitles']['edges']
+def query_title(title, providers, country):
+    search_titles = get_search_titles(title, country)
+    if 'errors' in search_titles:
+        raise Exception(search_titles['errors'][0]['message'])
+    results = search_titles['data']['popularTitles']['edges']
     movies = []
     for result in results:
         movie = {
-            'id': result['node']['id'],
+            'external_id': result['node']['id'],
             'title': result['node']['content']['title'],
             'flatrate': [],
             'buy': [],
             'rent': [],
             'free': [],
         }
-        offers = get_title_offers(movie['id'])['data']['node']
+        offers = get_title_offers(movie['external_id'], country)['data']['node']
         if offers['offerCount'] > 0:
             for offer in offers['flatrate']:
                 if offer['package']['technicalName'] in providers:
                     flatrate = {
-                        'provider_name': offer['package']['clearName'],
-                        'provider_tech_name': offer['package']['technicalName'],
+                        'name': offer['package']['clearName'],
+                        'tech_name': offer['package']['technicalName'],
                         'url': offer['standardWebURL'],
                         'available_to': offer['availableTo'],
                     }
@@ -139,8 +142,8 @@ def query_title(title, providers):
                         'price': offer['retailPriceValue'],
                         'currency': offer['currency'],
                         'last_price_change': offer['lastChangeRetailPriceValue'],
-                        'provider_name': offer['package']['clearName'],
-                        'provider_tech_name': offer['package']['technicalName'],
+                        'name': offer['package']['clearName'],
+                        'tech_name': offer['package']['technicalName'],
                         'url': offer['standardWebURL'],
                         'available_to': offer['availableTo'],
                     }
@@ -151,8 +154,8 @@ def query_title(title, providers):
                         'price': offer['retailPriceValue'],
                         'currency': offer['currency'],
                         'last_price_change': offer['lastChangeRetailPriceValue'],
-                        'provider_name': offer['package']['clearName'],
-                        'provider_tech_name': offer['package']['technicalName'],
+                        'name': offer['package']['clearName'],
+                        'tech_name': offer['package']['technicalName'],
                         'url': offer['standardWebURL'],
                         'available_to': offer['availableTo'],
                     }
@@ -160,8 +163,8 @@ def query_title(title, providers):
             for offer in offers['free']:
                 if offer['package']['technicalName'] in providers:
                     free = {
-                        'provider_name': offer['package']['clearName'],
-                        'provider_tech_name': offer['package']['technicalName'],
+                        'name': offer['package']['clearName'],
+                        'tech_name': offer['package']['technicalName'],
                         'url': offer['standardWebURL'],
                         'available_to': offer['availableTo'],
                     }
