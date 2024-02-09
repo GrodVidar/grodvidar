@@ -9,13 +9,20 @@
     <div class="row">
         <div class="col-lg-3 col-sm-2"></div>
         <div class="col-lg-6 col-sm-8">
-            <h3 class="text-center">Enter a Movie/Show to search for:</h3>
             <div class="d-flex justify-content-center">
                 <form method="post">
                     {% csrf_token %}
-
-                    {{ form|crispy }}
-                <button type="submit" class="btn btn-success btn-lg">Submit</button>
+                    <div class="btn-group-toggle col col-xl-8 mx-auto mb-3" data-toggle="buttons" style="text-align: center;">
+                    {% load static %}
+                    {% for value, label in form.providers.field.choices %}
+                        <label class="btn btn-dark active providerContainer">
+                            <input type="checkbox" name="{{ form.providers.html_name }}" value="{{ value }}" id="{{ form.my_field.html_name }}_{{ forloop.counter }}" {% if value in form.providers.value %}checked{% endif %}>
+                            <img src="{% static 'img/providers/'|add:value|add:'.jfif' %}" width="50px" alt="{{ label }}">
+                            <p class="providerName">{{ label }}</p>
+                        </label>
+                    {% endfor %}
+                    </div>
+                    {% crispy form %}
                 </form>
             </div>
             {% if error or movies %}
