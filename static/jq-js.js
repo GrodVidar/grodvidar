@@ -5,6 +5,10 @@ $('#deleteModal').on('show.bs.modal', function (event) {
     modal.find('#deleteForm').attr('action', pk );
 });
 
+$(document).on("select2:open", () => {
+  document.querySelector(".select2-container--open .select2-search__field").focus()
+})
+
 
 
 //action("{% url 'delete_view' " + pk + " %}")

@@ -169,5 +169,6 @@ def query_title(title, providers, country):
                         'available_to': offer['availableTo'],
                     }
                     movie['free'].append(free)
-            movies.append(movie)
+            if movie['flatrate'] or movie['buy'] or movie['rent'] or movie['free']:
+                movies.append(movie)
     return movies

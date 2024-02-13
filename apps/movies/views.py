@@ -3,24 +3,30 @@ import requests
 from apps.movies.forms import MoviesForm
 from apps.movies.queries import query_title
 from apps.movies.models import Movie
+from apps.utils import get_country_code_from_request
 
 
 def index(request):
-    # return render(request, 'movies/index.html')
+    context = {}
+    country_iso = ''
     if request.method == 'POST':
         form = MoviesForm(request.POST)
+        context['form'] = form
         if form.is_valid():
-            print(form.cleaned_data)
             providers = form.cleaned_data['providers']
             title = form.cleaned_data['title']
-            country = form.cleaned_data['country']
+            country_iso = form.cleaned_data['country']
             try:
-                movie_data = query_title(title, providers, country)
+                movie_data = query_title(title, providers, country_iso)
+                # print(movie_data)
                 movies = [Movie(**data) for data in movie_data]
-                return render(request, 'movies/index.html', {'form': form, 'movies': movies})
+                context['movies'] = movies
             except Exception as e:
-                return render(request, 'movies/index.html', {'form': form, 'error': e})
+                context['error'] = e
     else:
-        form = MoviesForm(initial={'country': 'SE'})
-
-    return render(request, 'movies/index.html', {'form': form})
+        country_iso = request.COOKIES.get('country_iso', get_country_code_from_request(request))
+        form = MoviesForm(initial={'country': country_iso})
+        context['form'] = form
+    response = render(request, 'movies/index.html', context)
+    response.set_cookie('country_iso', country_iso)
+    return response

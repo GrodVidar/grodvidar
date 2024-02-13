@@ -52,7 +52,7 @@ class MoviesForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Fieldset(
-                'Enter a Movie/Show to search for:',
+                '',
                 'country',
                 'title',
             ),
