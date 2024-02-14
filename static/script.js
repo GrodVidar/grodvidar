@@ -29,13 +29,9 @@ $(document).ready(function() {
 });
 
 $('#movieForm').submit(function(event) {
-    // Prevent the form from submitting normally
-
     var providers = [];
-
     $("input[type='checkbox']:checked").each(function() {
         providers.push($(this).val());
     });
-
     localStorage.setItem('providers', JSON.stringify(providers));
 });
