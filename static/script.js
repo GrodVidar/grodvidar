@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    $('.select2Field').select2();
+    $('.select2Field').select2({
+        width: '100%'
+    });
 
     var providers = JSON.parse(localStorage.getItem('providers'));
     if(providers) {
