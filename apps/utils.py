@@ -15,5 +15,6 @@ def get_country_code_from_request(request):
     data = requests.get(url, headers=headers).json()
     country_iso = data.get('country', {}).get('iso_code', {})
     if country_iso:
-        request.COOKIES.set('country_iso', country_iso)
         return country_iso
+    else:
+        return "SE"
