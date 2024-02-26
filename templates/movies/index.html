@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+{% block title %}Movies{% endblock %}
+{% load crispy_forms_tags %}
+{% crispy movies_form movies_form.helper %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-3 col-sm-2"></div>
+        <div class="col-lg-6 col-sm-8">
+            <div class="d-flex justify-content-center">
+                <form method="post" id="movieForm">
+                    {% csrf_token %}
+                    <h3 class="text-center">Enter a Movie/Show to search for:</h3>
+                    <div class="btn-group-toggle col-10 mx-auto mb-3" data-toggle="buttons" style="text-align: center;">
+                        {% load static %}
+                        {% for value, label in form.providers.field.choices %}
+                            <label class="btn btn-dark active providerContainer">
+                                <input class="btn-check" type="checkbox" name="{{ form.providers.html_name }}" value="{{ value }}" id="{{ form.my_field.html_name }}_{{ forloop.counter }}" {% if value in form.providers.value %}checked{% endif %}>
+                                <img src="{% static 'img/providers/'|add:value|add:'.jfif' %}" width="50px" alt="{{ label }}">
+                                <p class="providerName">{{ label }}</p>
+                            </label>
+                        {% endfor %}
+                    </div>
+                    {% crispy form %}
+                </form>
+            </div>
+            {% if error or movies %}
+                <div class="mt-4 p-5 bg-dark text-white rounded">
+                    {% if error %}
+                        <div class="result">
+                            <span>{{ error }}</span>
+                        </div>
+                    {% else %}
+                        <h3 class="display-4">Your results for <strong class="text-capitalize">{{ form.title.value }}</strong>:</h3>
+                        <div class="row">
+                            <div class="col-md-8 col-cs-12 col-sm-12">
+                                <ul>
+                                    {% for movie in movies %}
+                                        <li class="result">
+                                            <span>{{ movie.title }} can be:</span>
+                                            {% if movie.free %}
+                                                <ul>
+                                                    <li>
+                                                        <span>Watched for free at:</span>
+                                                    </li>
+                                                    <ul>
+                                                        {% for provider in movie.free %}
+                                                            <li>
+                                                                <span> <a href="{{ provider.url }}" target="_blank">{{ provider.name }}</a></span>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </ul>
+                                            {% endif %}
+                                            {% if movie.flatrate %}
+                                                <ul>
+                                                    <li>
+                                                        <span>Streamed with a subscription at:</span>
+                                                    </li>
+                                                    <ul>
+                                                        {% for provider in movie.flatrate %}
+                                                            <li>
+                                                                <span><a href="{{ provider.url }}" target="_blank">{{ provider.name }}</a></span>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </ul>
+                                            {% endif %}
+                                            {% if movie.rent %}
+                                                <ul>
+                                                    <li>
+                                                        <span>Rented at:</span>
+                                                    </li>
+                                                    <ul>
+                                                        {% for price in movie.rent %}
+                                                            <li>
+                                                                <span><a href="{{ price.provider.url }}" target="_blank">{{ price.provider.name }}</a> for {{ price.price }} {{ price.currency }}</span>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </ul>
+                                            {% endif %}
+                                            {% if movie.buy %}
+                                                <ul>
+                                                    <li>
+                                                        <span>Bought at:</span>
+                                                    </li>
+                                                    <ul>
+                                                        {% for price in movie.buy %}
+                                                            <li>
+                                                                <span><a href="{{ price.provider.url }}" target="_blank">{{ price.provider.name }}</a> for {{ price.price }} {{ price.currency }}</span>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </ul>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-lg-3 col-sm-2"></div>
+    </div>
+    {% load static %}
+    <script src="{% static 'script.js' %}"></script>
+{% endblock %}

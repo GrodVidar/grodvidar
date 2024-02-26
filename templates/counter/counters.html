@@ -17,17 +17,17 @@
                     </thead>
                     {% for counter in object_list %}
                         <tr>
-                            <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
+                            <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counters:counter_view' guid=counter.guid %}'">
                                 {{ counter.title }}
                             </td>
-                            <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
+                            <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counters:counter_view' guid=counter.guid %}'">
                                 {{ counter.end_date }}
                             </td>
                             <td>
-                                <a href="{% url 'update_view' counter.pk %}" class="btn btn-secondary">
+                                <a href="{% url 'counters:update_view' counter.pk %}" class="btn btn-secondary">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-pk="{% url 'delete_view' counter.pk %}">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-pk="{% url 'counters:delete_view' counter.pk %}">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </td>
@@ -36,7 +36,7 @@
                 </table>
             {% endif %}
             <div class="d-flex justify-content-center">
-                <a type="button" class="btn btn-success btn-lg" href="{% url 'create_view' %}">Create a counter</a>
+                <a type="button" class="btn btn-success btn-lg" href="{% url 'counters:create_view' %}">Create a counter</a>
             </div>
             {% if followed_counters %}
             <h3>Followed counters</h3>
@@ -49,10 +49,10 @@
                     </tr>
                 {% for counter in followed_counters %}
                     <tr>
-                        <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
+                        <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counters:counter_view' guid=counter.guid %}'">
                             {{ counter.title }}
                         </td>
-                        <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counter_view' guid=counter.guid %}'">
+                        <td class="clickableRow" onclick="javascript:window.location.href='{% url 'counters:counter_view' guid=counter.guid %}'">
                             {{ counter.end_date }}
                         </td>
                         <td>
