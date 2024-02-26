@@ -12,6 +12,8 @@ VIAPLAY = 'viaplay'
 HBO_MAX = 'hbomax'
 SKY_SHOWTIME = 'skyshowtime'
 SF_ANYTIME = 'sfanytime'
+ITUNES = 'itunes'
+MICROSOFT = 'microsoft'
 PROVIDER_CHOICES = (
     (NETFLIX, 'Netflix'),
     (PRIME, 'Amazon Prime Video'),
@@ -20,6 +22,8 @@ PROVIDER_CHOICES = (
     (HBO_MAX, 'HBO Max'),
     (SKY_SHOWTIME, 'Sky Showtime'),
     (SF_ANYTIME, 'SF Anytime'),
+    (ITUNES, 'Apple TV'),
+    (MICROSOFT, 'Microsoft Store'),
 )
 
 
