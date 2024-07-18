@@ -35,9 +35,12 @@
                     {% else %}
                         <h3 class="display-4">Your results for <strong class="text-capitalize">{{ form.title.value }}</strong>:</h3>
                         <div class="row">
-                            <div class="col-md-8 col-cs-12 col-sm-12">
-                                <ul>
-                                    {% for movie in movies %}
+                            {% for movie in movies %}
+                                <div class="col-md-4 d-none d-md-block">
+                                    <img style="max-width: 100%; height: auto;" src="{{ movie.poster }}" alt="Poster for {{ movie.title }}">
+                                </div>
+                                <div class="col-md-8 col-cs-12 col-sm-12">
+                                    <ul>
                                         <li class="result">
                                             <span>{{ movie.title }} can be:</span>
                                             {% if movie.free %}
@@ -97,9 +100,9 @@
                                                 </ul>
                                             {% endif %}
                                         </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                                    </ul>
+                                </div>
+                            {% endfor %}
                         </div>
                     {% endif %}
                 </div>
