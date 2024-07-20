@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from .base import BASE_DIR
 
-
+import dj_database_url
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -12,16 +12,12 @@ ALLOWED_HOSTS = ['counter.grodvidar.com']
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'GrodVidar$counter',
-        'USER': 'GrodVidar',
-        'PASSWORD': os.environ.get('MY_SQL_PASS'),
-        'HOST': 'GrodVidar.mysql.pythonanywhere-services.com',
-        'TEST': {
-            'NAME': 'GrodVidar$testdb',
-        },
-    },
+    'default': dj_database_url.config(
+        env="DATABASE_URL",
+        conn_max_age=500,
+        conn_health_checks=True,
+        ssl_require=True,
+    ),
 }
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'day_counter/media')
