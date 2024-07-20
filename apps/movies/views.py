@@ -35,8 +35,6 @@ def index(request):
                                 offer.url,
                                 offer.available_to
                             )
-                            print(media_entry.title)
-                            print(media_entry)
                             match offer.monetization_type:
                                 case 'FLATRATE':
                                     flatrate.append(provider)

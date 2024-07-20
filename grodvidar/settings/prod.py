@@ -10,6 +10,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['counter.grodvidar.com']
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DATABASES = {
     'default': dj_database_url.config(
