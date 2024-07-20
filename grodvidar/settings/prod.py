@@ -6,7 +6,7 @@ import dj_database_url
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -24,7 +24,7 @@ DATABASES = {
 MEDIA_ROOT = os.path.join(BASE_DIR, 'day_counter/media')
 
 
-DOMAIN = 'https://counter.grodvidar.com'
+DOMAIN = 'https://grodvidar.com'
 
 EMAIL_USE_TLS = True
 
