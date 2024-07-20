@@ -1,16 +1,16 @@
 import os
-import environ
 from pathlib import Path
 from .base import BASE_DIR
-
-env = environ.Env()
-environ.Env.read_env()
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 DATABASES = {
     'default': {
