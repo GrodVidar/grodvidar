@@ -1,11 +1,8 @@
 import os
-import environ
 from pathlib import Path
 from .base import BASE_DIR
 
 
-env = environ.Env()
-environ.Env.read_env()
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -19,7 +16,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'GrodVidar$counter',
         'USER': 'GrodVidar',
-        'PASSWORD': env('MY_SQL_PASS'),
+        'PASSWORD': os.environ.get('MY_SQL_PASS'),
         'HOST': 'GrodVidar.mysql.pythonanywhere-services.com',
         'TEST': {
             'NAME': 'GrodVidar$testdb',

@@ -1,6 +1,7 @@
+import os
 from .base import *
 
-if env('ENVIRONMENT') == 'prod':
+if os.environ.get('ENVIRONMENT', '') == 'prod':
     from .prod import *
 else:
     from .dev import *
