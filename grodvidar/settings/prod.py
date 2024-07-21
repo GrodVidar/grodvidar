@@ -21,8 +21,6 @@ DATABASES = {
     ),
 }
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'day_counter/media')
-
 
 DOMAIN = 'https://grodvidar.com'
 
@@ -44,5 +42,8 @@ STORAGES = {
             "region_name": "eu-central-1",
 
         }
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     }
 }
