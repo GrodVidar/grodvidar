@@ -35,12 +35,11 @@ STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
-            "access_key": os.environ.get("AWS_ACCESS_KEY_ID"),
+            "access_key": os.environ.get("AWS_ACCESS_KEY"),
             "secret_key": os.environ.get("AWS_SECRET_ACCESS_KEY"),
             "bucket_name": os.environ.get("AWS_STORAGE_BUCKET_NAME"),
             "location": "media",
             "region_name": "eu-central-1",
-
         }
     },
     "staticfiles": {
