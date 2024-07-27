@@ -43,7 +43,7 @@
                         <h3 class="display-4">Your results for <strong class="text-capitalize">{{ form.title.value }}</strong>:</h3>
                         <div class="row">
                             {% for movie in movies %}
-                                <div class="card bg-dark">
+                                <div class="card bg-super-dark">
                                     <div class="row mb-2">
                                         <span class="mb-1 mt-1 text-center card-title"><strong>{{ movie.title }}</strong> can be:</span>
                                         <div class="col-md-5 d-none d-md-block">
@@ -55,7 +55,7 @@
                                                 <ul>
                                                     {% for provider in movie.free %}
                                                         <li>
-                                                            <span> <a href="{{ provider.url }}" target="_blank">{{ provider.name }}</a></span>
+                                                            <span> <a class="text-success" href="{{ provider.url }}" target="_blank">{{ provider.name }}</a></span>
                                                         </li>
                                                     {% endfor %}
                                                 </ul>
@@ -65,7 +65,7 @@
                                                 <ul>
                                                     {% for provider in movie.flatrate %}
                                                         <li>
-                                                            <span><a href="{{ provider.url }}" target="_blank">{{ provider.name }}</a></span>
+                                                            <span><a class="text-success" href="{{ provider.url }}" target="_blank">{{ provider.name }}</a></span>
                                                         </li>
                                                     {% endfor %}
                                                 </ul>
@@ -75,7 +75,7 @@
                                                 <ul>
                                                     {% for price in movie.rent %}
                                                         <li>
-                                                            <span><a href="{{ price.provider.url }}" target="_blank">{{ price.provider.name }}</a> for {{ price.price }} {{ price.currency }}</span>
+                                                            <span><a class="text-success" href="{{ price.provider.url }}" target="_blank">{{ price.provider.name }}</a> for {{ price.price }} {{ price.currency }}</span>
                                                         </li>
                                                     {% endfor %}
                                                 </ul>
@@ -85,7 +85,7 @@
                                                 <ul>
                                                     {% for price in movie.buy %}
                                                         <li>
-                                                            <span><a href="{{ price.provider.url }}" target="_blank">{{ price.provider.name }}</a> for {{ price.price }} {{ price.currency }}</span>
+                                                            <span><a class="text-success" href="{{ price.provider.url }}" target="_blank">{{ price.provider.name }}</a> for {{ price.price }} {{ price.currency }}</span>
                                                         </li>
                                                     {% endfor %}
                                                 </ul>

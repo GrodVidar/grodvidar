@@ -59,3 +59,10 @@ body{
 .asteriskField {
     display: none;
 }
+
+.bg-super-dark {
+    --bs-text-opacity: 1;
+    background-color:
+    rgba(0, 0, 0, var(--bs-text-opacity))
+    !important;
+}
