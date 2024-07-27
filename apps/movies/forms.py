@@ -64,13 +64,13 @@ class MoviesForm(forms.Form):
         self.helper.layout = Layout(
             Row(
                 Column(HTML('Country: '), css_class='col-auto'),
-                Column('country'),
-                css_class="px-5",
+                Column('country', css_class='col-12 col-md-5 col-lg-5'),
+                css_class="d-flex justify-content-center",
             ),
             Row(
                 Column(HTML('Title: '), css_class='col-auto'),
-                Column('title'),
-                css_class="px-5",
+                Column('title', css_class='col-12 col-md-6 col-lg-6'),
+                css_class="d-flex justify-content-center",
             ),
             Row(
                 Column(Submit('submit', 'Search', css_class='btn btn-dark'), css_class=''),

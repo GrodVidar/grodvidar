@@ -19,7 +19,7 @@
                         {% for value, label in form.providers.field.choices %}
                             <label class="btn btn-dark active providerContainer">
                                 <input class="btn-check" type="checkbox" name="{{ form.providers.html_name }}" value="{{ value }}" id="{{ form.my_field.html_name }}_{{ forloop.counter }}" {% if value in form.providers.value %}checked{% endif %}>
-                                <img src="{% static 'img/providers/'|add:value|add:'.jfif' %}" width="50px" alt="{{ label }}">
+                                <img src="{% static 'img/providers/'|add:value|add:'.jfif' %}" width="55px" alt="{{ label }}">
                                 <p class="providerName">{{ label }}</p>
                             </label>
                         {% endfor %}
