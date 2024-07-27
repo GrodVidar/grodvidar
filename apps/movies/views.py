@@ -27,7 +27,7 @@ def index(request):
                     buy = []
                     free = []
                     for offer in media_entry.offers:
-                        if convert_tech_name_to_short(offer.package.technical_name) in providers:
+                        if convert_tech_name_to_short(offer.package.technical_name) in providers or not providers:
                             matched = True
                             provider = Provider(
                                 offer.package.name,

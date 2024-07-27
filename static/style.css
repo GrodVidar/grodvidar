@@ -55,3 +55,7 @@ body{
 .nav-link {
     color: white;
 }
+
+.asteriskField {
+    display: none;
+}
