@@ -1,11 +1,12 @@
 import uuid
 
-from factory.django import DjangoModelFactory
 from factory import LazyAttribute, SubFactory
+from factory.django import DjangoModelFactory
 from faker import Faker
-from ..models import Counter
+
 from apps.users.models import User
 
+from ..models import Counter
 
 faker = Faker()
 
@@ -27,4 +28,3 @@ class CounterFactory(DjangoModelFactory):
 
     class Meta:
         model = Counter
-

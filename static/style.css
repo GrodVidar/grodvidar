@@ -66,3 +66,10 @@ body{
     rgba(0, 0, 0, var(--bs-text-opacity))
     !important;
 }
+
+#id_captcha {
+    border: none;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}

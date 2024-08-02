@@ -25,6 +25,7 @@
                     <input class="form-control" type="password" name="password2" placeholder="{% trans 'Re-enter password' %}" autocomplete="new-password" required id="id_password2">
                 </p>
                 <button class="btn btn-dark" type="submit">{% trans 'Sign Up' %}</button>
+                {{ form.captcha }}
             </form>
         </div>
         <div class="col-lg-4 col-sm-2"></div>

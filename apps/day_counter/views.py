@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView, DeleteView, UpdateView
@@ -12,58 +12,64 @@ from .models import Counter
 
 def index(request):
     if request.user.is_authenticated:
-        return redirect('counters:counters_view')
+        return redirect("counters:counters_view")
 
-    return render(request, 'counter/index.html')
+    return render(request, "counter/index.html")
     # else:
     #     return TemplateResponse(request, 'index.html')
 
 
 def logout(request):
     django_logout(request)
-    return render(request, 'index.html')
+    return render(request, "index.html")
 
 
 class CounterView(generic.DetailView):
     model = Counter
-    template_name = 'counter/detail.html'
+    template_name = "counter/detail.html"
 
     def get_object(self, queryset=None):
-        return Counter.objects.get(guid=self.kwargs['guid'])
+        return Counter.objects.get(guid=self.kwargs["guid"])
 
     def get_context_data(self, **kwargs):
         context = super(CounterView, self).get_context_data(**kwargs)
-        context['is_following'] = self.object.followers.filter(pk=self.request.user.pk).exists()
+        context["is_following"] = self.object.followers.filter(
+            pk=self.request.user.pk
+        ).exists()
         return context
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if 'follow' in request.POST:
+        if "follow" in request.POST:
             self.object.followers.add(request.user)
-            messages.add_message(request, messages.SUCCESS, 'Counter followed')
-        elif 'unfollow' in request.POST:
+            messages.add_message(request, messages.SUCCESS, "Counter followed")
+        elif "unfollow" in request.POST:
             self.object.followers.remove(request.user)
-            messages.add_message(request, messages.SUCCESS, 'Counter unfollowed')
+            messages.add_message(request, messages.SUCCESS, "Counter unfollowed")
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context=context)
 
 
 class CountersView(LoginRequiredMixin, generic.ListView):
-    template_name = 'counter/counters.html'
-    permission_denied_message = 'not logged in'
+    template_name = "counter/counters.html"
+    permission_denied_message = "not logged in"
 
     def get_context_data(self, object_list=None, *args, **kwargs):
         context = super(CountersView, self).get_context_data(**kwargs)
-        context['followed_counters'] = Counter.objects.filter(followers=self.request.user)
+        context["followed_counters"] = Counter.objects.filter(
+            followers=self.request.user
+        )
         return context
 
     def get_queryset(self):
         return Counter.objects.filter(user=self.request.user)
 
     def post(self, request, *args, **kwargs):
-        if 'unfollow' in request.POST:
-            Counter.objects.get(pk=request.POST['unfollow']).followers.remove(self.request.user)
-            messages.add_message(request, messages.SUCCESS, 'Counter unfollowed')
+        if "unfollow" in request.POST:
+            Counter.objects.get(pk=request.POST["unfollow"]).followers.remove(
+                self.request.user
+            )
+            messages.add_message(request, messages.SUCCESS, "Counter unfollowed")
         self.object_list = self.get_queryset()
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context=context)
@@ -72,10 +78,10 @@ class CountersView(LoginRequiredMixin, generic.ListView):
 class CounterCreateView(CreateView):
     model = Counter
     form_class = CounterForm
-    template_name = 'counter/create.html'
+    template_name = "counter/create.html"
 
     def get_success_url(self):
-        return reverse('counters:counter_view', kwargs={'guid': self.object.guid})
+        return reverse("counters:counter_view", kwargs={"guid": self.object.guid})
 
     def form_valid(self, form):
         counter = form.save(commit=False)
@@ -90,10 +96,10 @@ class CounterCreateView(CreateView):
 class CounterUpdateView(UserPassesTestMixin, UpdateView):
     model = Counter
     form_class = CounterForm
-    template_name = 'counter/update.html'
+    template_name = "counter/update.html"
 
     def get_success_url(self):
-        return reverse('counters:counter_view', kwargs={'guid': self.object.guid})
+        return reverse("counters:counter_view", kwargs={"guid": self.object.guid})
 
     def test_func(self):
         return self.get_object().user.pk == self.request.user.pk
@@ -101,10 +107,7 @@ class CounterUpdateView(UserPassesTestMixin, UpdateView):
 
 class CounterDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Counter
-    success_url = reverse_lazy('counters:counters_view')
+    success_url = reverse_lazy("counters:counters_view")
 
     def test_func(self):
         return self.get_object().user.pk == self.request.user.pk
-
-
-

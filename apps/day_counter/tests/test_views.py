@@ -14,12 +14,14 @@ class CounterViewTest(TestCase):
         cls.counter_without_user = CounterFactory()
 
     def test_counter_detail(self):
-        url = reverse('counters:counter_view', kwargs={'guid': self.counter_without_user.guid})
+        url = reverse(
+            "counters:counter_view", kwargs={"guid": self.counter_without_user.guid}
+        )
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_counter_list(self):
-        url = reverse('counters:counters_view')
+        url = reverse("counters:counters_view")
         self.client.force_login(user=self.user)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)

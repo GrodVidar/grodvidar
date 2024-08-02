@@ -6,18 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='enable_reminders',
+            model_name="user",
+            name="enable_reminders",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='user',
-            name='reminder_days',
-            field=models.IntegerField(default=0, verbose_name='Days to remind before a counter ends'),
+            model_name="user",
+            name="reminder_days",
+            field=models.IntegerField(
+                default=0, verbose_name="Days to remind before a counter ends"
+            ),
         ),
     ]

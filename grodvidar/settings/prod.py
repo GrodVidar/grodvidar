@@ -1,19 +1,19 @@
 import os
 from pathlib import Path
-from .base import BASE_DIR
 
 import dj_database_url
 
+from .base import BASE_DIR
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DATABASES = {
-    'default': dj_database_url.config(
+    "default": dj_database_url.config(
         env="DATABASE_URL",
         conn_max_age=500,
         conn_health_checks=True,
@@ -22,14 +22,17 @@ DATABASES = {
 }
 
 
-DOMAIN = 'https://grodvidar.com'
+DOMAIN = "https://grodvidar.com"
+
+RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
 
 EMAIL_USE_TLS = True
 
 # AWS S3 SETTINGS
-AWS_BUCKET_URL = os.environ.get('AWS_BUCKET_URL')
+AWS_BUCKET_URL = os.environ.get("AWS_BUCKET_URL")
 
-MEDIA_URL = AWS_BUCKET_URL + '/media/'
+MEDIA_URL = AWS_BUCKET_URL + "/media/"
 
 STORAGES = {
     "default": {
@@ -40,9 +43,9 @@ STORAGES = {
             "bucket_name": os.environ.get("AWS_STORAGE_BUCKET_NAME"),
             "location": "media",
             "region_name": "eu-central-1",
-        }
+        },
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    }
+    },
 }
