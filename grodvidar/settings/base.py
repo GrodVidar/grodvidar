@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 import secrets
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -153,6 +156,7 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_ON_GET = True
 SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS = False
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
